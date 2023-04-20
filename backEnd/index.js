@@ -52,11 +52,13 @@ app.get ('/api/v1/cookieSetzen', (req, res) => {
 })
 
 
-// auf Cookie Objekt zugreifen     ->  das von der Middleware cookieParser erstellt wurde 
+// auf Cookie Objekt zugreifen        
+// geht nur mit authController.js   ->  das von der Middleware cookieParser erstellt wurde
 app.get('/api/v1/cookieAuslesen' , (req, res) => {
     console.log(req.cookies.token)    // ! das Cookie Objekt von token wird ausgelesen
     res.end()
 })
+
 
 
 
