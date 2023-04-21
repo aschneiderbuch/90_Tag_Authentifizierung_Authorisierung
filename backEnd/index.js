@@ -47,10 +47,10 @@ const app = express()   // server erstellen
 
 app.use(morgan('dev'))   // für Logging
 
-const CORS_WHITELIST = process.env.CORS_WHITELIST
+const CORS_WHITELIST = process.env.CORS_WHITELIST //?
 app.use(cors( {
-    origin: CORS_WHITELIST.split(','),
-    credentails: true           // ! Secure HTTPS Cookies    wichtig damit HTTPS Cookies durchgelassen werden
+    origin:  CORS_WHITELIST,
+    credentials: true           // ! Secure HTTPS Cookies    wichtig damit HTTPS Cookies durchgelassen werden
 }))
 
 app.use(cookieParser())          // ! auslesen von Cookies
