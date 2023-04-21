@@ -5,7 +5,7 @@ import morgan from 'morgan'     // für Logging
 import cookieParser from 'cookie-parser'     // auslesen von Cookies
 
 import { login, register } from './controller/authController.js'    // für Login und Register
-import { encryptPassword  } from './middleware/authMiddleware.js'   // für Passwort verschlüsseln // ! das Passwort aus dem FrontEnd wird verschlüsselt
+import { encryptPassword, verifyJWTToken  } from './middleware/authMiddleware.js'   // für Passwort verschlüsseln // ! das Passwort aus dem FrontEnd wird verschlüsselt
 
 
 
@@ -93,6 +93,12 @@ app.post('/login', encryptPassword, login)  // ! das verschlüsselte Passwort wi
 // und dann login in controller/authController.js weitergeleitet
 //  dort in authCon.. wird das Passwort in der // ! MongoDB geprüft
 
+
+// Testroute zum verifizieren des Tokens
+app.get('/user', verifyJWTToken, (req, res) => {
+    console.log(req.user)
+    res.end()
+})
 
 
 // Server starten
