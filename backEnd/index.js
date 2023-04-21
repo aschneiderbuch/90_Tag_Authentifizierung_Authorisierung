@@ -46,7 +46,7 @@ app.get('/', (req, res) => {
 
 
 // einfache Cookies setzen mit einer Route    // ohne Sicherheit ohne HTTPS ohne credentials
-app.get ('/api/v1/cookieSetzen', (req, res) => {
+app.get ('/cookieSetzen', (req, res) => {
     res.cookie('testNameKey', 'testTextValue' )  // mit maxAge: 1000 * 60 * 60   // 1 Stunde aktiv
     res.status(200).send('Cookie gesetzt Alles OKAY')
 })
@@ -54,12 +54,24 @@ app.get ('/api/v1/cookieSetzen', (req, res) => {
 
 // auf Cookie Objekt zugreifen        
 // geht nur mit authController.js   ->  das von der Middleware cookieParser erstellt wurde
-app.get('/api/v1/cookieAuslesen' , (req, res) => {
+app.get('/cookieAuslesen' , (req, res) => {
     console.log(req.cookies.token)    // ! das Cookie Objekt von token wird ausgelesen
     res.end()
 })
 
 
+// ? Vorsicht verschlüsseltes Passwort und Token sind zwei unterschiedliche Dinge
+
+// wir bauen uns ein registerieren und einen anmelden/login bereich   Routen
+app.post('/register', encryptPassword, register)   // ! das Passwort wird verschlüsselt
+// psw wird mit encryptPassword in util/token.js verschlüsselt
+// und dann register in controller/authController.js weitergeleitet
+// dort in authCon.. wird das Passwort in der // ! MongoDB gespeichert
+
+app.post('/login', encryptPassword, login)  // ! das verschlüsselte Passwort wird weitergeleitet und geprüft
+// psw wird mit encryptPassword in util/token.js verschlüsselt
+// und dann login in controller/authController.js weitergeleitet
+//  dort in authCon.. wird das Passwort in der // ! MongoDB geprüft
 
 
 
