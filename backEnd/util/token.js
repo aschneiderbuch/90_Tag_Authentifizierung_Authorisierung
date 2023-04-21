@@ -7,3 +7,21 @@ export const createToken = ( user ) => {
 
         return token           //  Token wird zurückgegeben
 }
+
+
+
+// ? mit try? 
+export const verifyToken = (token) => {
+    try { 
+        const result = jwt.verify(token, process.env.JWT_SECRET)     // ! der Token wird mit dem JWT_SECRET entschlüsselt
+        // bzw. JWT_SECRET wird geprüft und ob Hash vom Token übereinstimmt
+        // damit kann erkannt werden ob payload verändert wurde
+        return result
+    } catch (error) {
+        console.log(error)
+        return false
+    }
+}
+
+
+

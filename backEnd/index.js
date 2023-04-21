@@ -4,7 +4,8 @@ import cors from 'cors'          // für Sicherheit URL beschränken    // ! Sec
 import morgan from 'morgan'     // für Logging
 import cookieParser from 'cookie-parser'     // auslesen von Cookies
 
-
+import { login, register } from './controller/authController.js'    // für Login und Register
+import { encryptPassword  } from './middleware/authMiddleware.js'   // für Passwort verschlüsseln // ! das Passwort aus dem FrontEnd wird verschlüsselt
 
 
 
@@ -18,7 +19,22 @@ import nodemailor from 'nodemailer'   // für Email versenden   // https://mailt
 import { getDb } from './util/db.js'   //   stellt Verbindung zur MongoDB her einloggen und Datenbank auswählen
 
 
-
+/**
+ * zum verständnis 
+ * 
+ * verschlüsseln encrptPassword:
+ * user gibt in register maske ein psw ein
+ *  die übertragung vom FrontEnd zum BackEnd ist verschlüsselt mit HTTPS 
+ *    das psw wird mit encryptPassword verschlüsselt und in die MongoDB geschrieben
+ *     damit das psw nicht im Klartext in der MongoDB steht 
+ * 
+ * token jws.sing:
+ * damit der user nicht bei jedem fetch sich neu einloggen muss und das psw angeben muss
+ * wird ein Cookie_Config_und_Sicherheiten erstellt und mit einem Token gespeichert
+ * der Token wird mit jwt.sign  JWT_SECRET und user._id  und 1h verschlüsselt
+ * 
+ * 
+ */
 
 
 

@@ -3,12 +3,19 @@ import { createToken } from '../util/token.js'    // dort wird Token mit jwt.sig
 
 // ! damit werden die Cookies sicherer gemacht, das sie im FontEnd nicht gelesen werden können 
 // ! und nur über HTTPS übertragen werden
+// ! dieses cookie kann nur im BakcEnd gelesen werden    
+// ! kann nicht im FrontEnd ausgelesen werden
 const cookieConfig = {
     httpOnly: true,     // ! Secure HTTPS Cookies    wichtig damit HTTPS Cookies durchgelassen werden  // ! Cookies können nicht im FrontEnd ausgelesen werden
-    secure: true,       // ! aktivieren von HTTPS Cookies
+    secure: true,       // ! aktivieren von HTTPS Cookies   // außnahme localhost
     sameSite: 'none'    // ! damit sie nicht von der gleichen Domain kommen müssen 
     // da wir auf localhost:3000 oder localhost:5173 arbeiten  // React Vite usw
 }
+
+
+
+
+
 
 // wir erzeugen einen neuen User und legen Ihn in der Datenbank ab
 // mit Namen und bereits mit Token verschlüsseltem Passwort

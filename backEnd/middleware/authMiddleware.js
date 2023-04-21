@@ -1,17 +1,43 @@
 import { createHmac } from 'crypto' 
 
-// ! das Passwort aus dem FrontEnd wird verschlüsselt
+import { verifyToken } from '../util/token.js'
+
+// ! das Passwort aus dem FrontEnd wird verschlüsselt     !!! so das es nie wieder zurück gerechnet werden kann
+// ! man kann nur anhand der Hashes vergleichen ob es das gleiche Passwort ist bzw war
+// ! ohne .update    erzeugt hmac ein Hash-Objekt, das nicht mehr geändert werden kann  und das nicht mehr entschlüsselt werden kann
 // ! next      wichtig,   damit die Funktion weiter geht wenn leer ist
 export const encryptPassword = (req, res, next) => {
     console.log('in der middleware')
     console.log(req.body)
 const hmac = createHmac('sha512',  
- req.body.password)     // ! das Passwort aus dem FrontEnd wird verschlüsselt
+ req.body.password)     //  das Passwort aus dem FrontEnd //! soll verschlüsselt
 
-// ! hmac.update(process.env.JWT_SECRET)     // ! das Passwort wird noch zusätzlich mit dem JWT_SECRET verschlüsselt
 
-req.body.password = hmac.digest('hex')     // das Passwort wird in Hexadezimal umgewandelt
+  // ! das Passwort wird noch zusätzlich mit dem JWT_SECRET verschlüsselt
+  // ! vorteil, wenn das psw nur a wäre, könnte es durch brute force herausgefunden werden 
+  // bzw. durch ein Wörterbuch oder durch Rainbow Tables
+// ! hmac.update(process.env.JWT_SECRET)    
+
+req.body.password = hmac.digest('hex')     // ! hier wird psw verschlüsselt // das Passwort wird in Hexadezimal umgewandelt
+// ! wir speichern das verschlüsselte psw zurück ins psw und überschreiben es somit von davor
+// ! psw wird also sofort verschlüsselt selbst im BackEnd wird es also nie im Klartext gespeichert
 
 next()      // wichtig, damit die Funktion weiter geht, wenn kein .password
 
+}
+
+
+
+
+// ! verifyJWTToken  // von util/token.js
+export const verifyJWTToken = (req, res, next) => {
+  const token = req.cookies.token
+  try{
+    const userClaim = verifyToken(token)   // ! vergleich findet in token.js statt   
+    req.user = userClaim      
+    next()
+  } catch (err) {
+    console.log(err) 
+    res.status(401).end()
+  }
 }
