@@ -33,7 +33,11 @@ import { getDb } from './util/db.js'   //   stellt Verbindung zur MongoDB her ei
  * wird ein Cookie_Config_und_Sicherheiten erstellt und mit einem Token gespeichert
  * der Token wird mit jwt.sign  JWT_SECRET und user._id  und 1h verschlüsselt
  * 
- * 
+ * ! hmac  ist Hash   -> darauß kann kein Text zurück gerechnet werden
+ *                         ! niemals 
+ *                          ! kann mit hmc.update    zustätzlich noch mit JWT_Secret verschlüsselt werden
+ * ! JWT Token        -> übermittelt payload im klar Text
+ *                         ! läuft nach 10s bis 1h ab    kann dann niemals entschlüsselt werden
  */
 
 
