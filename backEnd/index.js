@@ -95,9 +95,10 @@ app.post('/login', encryptPassword, login)  // ! das verschlüsselte Passwort wi
 
 
 // Testroute zum verifizieren des Tokens
-app.get('/user', verifyJWTToken, (req, res) => {
+app.get('/userValidate', verifyJWTToken, (req, res) => {
     console.log(req.user)
-    res.end()
+    res.end()   // 200 zurück, hier macht frontEnd im Protect einen fetch 
+    // und prüft ob es den User in der Datenbank gibt
 })
 
 
