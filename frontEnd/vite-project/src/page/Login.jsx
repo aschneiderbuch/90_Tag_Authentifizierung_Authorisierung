@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { BrowserRouter, Route, Routes, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 
 
@@ -17,7 +17,10 @@ function Login() {
     const login = async () => {
 
         const userLogin = userLoginRef.current.value
+        if(userLogin === '') {setError(true); return }   // ! wichtig wenn keine Eingabe kommt man nicht durch Login Feld durch
+
         const passwordLogin = passwordLoginRef.current.value
+        if(passwordLogin === '') { setError(true) ; return}    // ! wichtig wenn keine Eingabe kommt man nicht durch Login Feld durch
 
         const result = await fetch('http://localhost:9999/login', {
             method: 'POST',
