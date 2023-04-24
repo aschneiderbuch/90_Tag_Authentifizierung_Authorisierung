@@ -48,10 +48,10 @@ export const verifyJWTToken = (req, res, next) => {
 
 export const deleteCookie = (req, res, next) => {
   console.log('in Middleware deleteCookie')
-  res.clearCookie('token')  // ! secure Cookie 'token'    wird gelöscht
+   res.clearCookie('token', { httpOnly: true, secure: true})  // ! secure Cookie 'token'    wird gelöscht
   // damit nicht mehr eingeloggt ist
 
-  cookie.set('token', '', { expires: new Date(0), secure:true})
+ // res.cookie.set('token', 's', { expires: new Date(0), secure:true})
   // '' leeren String, damit Hash weg ist
   // new Date(0) setzt das Ablaufdatum vom token auf 1.1.1970 00:00:00 ;-)
 

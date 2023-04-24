@@ -17,10 +17,10 @@ function Login() {
     const login = async () => {
 
         const userLogin = userLoginRef.current.value
-        if (userLogin === '') { setError(true); return }   // ! wichtig wenn keine Eingabe kommt man nicht durch Login Feld durch
+        // if (userLogin === '') { setError(true); return }   // ! wichtig wenn keine Eingabe kommt man nicht durch Login Feld durch
 
         const passwordLogin = passwordLoginRef.current.value
-        if (passwordLogin === '') { setError(true); return }    // ! wichtig wenn keine Eingabe kommt man nicht durch Login Feld durch
+       // if (passwordLogin === '') { setError(true); return }    // ! wichtig wenn keine Eingabe kommt man nicht durch Login Feld durch
 
         const result = await fetch('http://localhost:9999/login', {
             method: 'POST',

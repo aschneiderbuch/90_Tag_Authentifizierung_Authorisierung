@@ -15,6 +15,7 @@ function App() {
 <BrowserRouter>
 <Routes>
 <Route path='/' element={<Login></Login>} > </Route>
+<Route path='/logout' element={<Login></Login>} > </Route>
 <Route element={<Protect></Protect>}  >
   <Route path='/dashboard' element={<Dashboard></Dashboard>} >  </Route>  
   {/* die Routen unterhalb 
