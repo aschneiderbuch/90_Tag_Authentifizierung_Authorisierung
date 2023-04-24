@@ -88,7 +88,7 @@ app.post('/register', encryptPassword, register)   // ! das Passwort wird versch
 // und dann register in controller/authController.js weitergeleitet
 // dort in authCon.. wird das Passwort in der // ! MongoDB gespeichert
 
-app.post('/login', encryptPassword, login)  // ! das verschlüsselte Passwort wird weitergeleitet und geprüft
+app.post('/login', encryptPassword,  login)  // ! das verschlüsselte Passwort wird weitergeleitet und geprüft
 // psw wird mit encryptPassword in util/token.js verschlüsselt
 // und dann login in controller/authController.js weitergeleitet
 //  dort in authCon.. wird das Passwort in der // ! MongoDB geprüft

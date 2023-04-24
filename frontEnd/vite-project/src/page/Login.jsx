@@ -17,10 +17,10 @@ function Login() {
     const login = async () => {
 
         const userLogin = userLoginRef.current.value
-        if(userLogin === '') {setError(true); return }   // ! wichtig wenn keine Eingabe kommt man nicht durch Login Feld durch
+        if (userLogin === '') { setError(true); return }   // ! wichtig wenn keine Eingabe kommt man nicht durch Login Feld durch
 
         const passwordLogin = passwordLoginRef.current.value
-        if(passwordLogin === '') { setError(true) ; return}    // ! wichtig wenn keine Eingabe kommt man nicht durch Login Feld durch
+        if (passwordLogin === '') { setError(true); return }    // ! wichtig wenn keine Eingabe kommt man nicht durch Login Feld durch
 
         const result = await fetch('http://localhost:9999/login', {
             method: 'POST',
@@ -104,19 +104,22 @@ function Login() {
     return (
         <>
 
-            <button onClick={login} >login</button>
-            <label htmlFor="userLogin">userLogin</label>
-            <input ref={userLoginRef} type="text" name="userLogin" id="userLogin" placeholder='userLogin' required />
-            <label htmlFor="passwordLogin">passwordLogin</label>
-            <input ref={passwordLoginRef} type="password" name='passwordLogin' id='passwordLogin' placeholder="passwordLogin" required />
-            <button onClick={check}>check</button>
+            <>
+                <button onClick={login} >login</button>
+                <label htmlFor="userLogin">userLogin</label>
+                <input ref={userLoginRef} type="text" name="userLogin" id="userLogin" placeholder='userLogin' required />
+                <label htmlFor="passwordLogin">passwordLogin</label>
+                <input ref={passwordLoginRef} type="password" name='passwordLogin' id='passwordLogin' placeholder="passwordLogin" required />
+                <button onClick={check}>check</button>
+            </>
 
+            <>
             <button onClick={register}>register</button>
             <label htmlFor='user'>Register</label>
             <input ref={userRef} type="text" placeholder='user' name='user' required></input>
             <label htmlFor='password'>Password</label>
             <input ref={passwordRef} type="password" placeholder='password' name='password' required></input>
-
+            </>
 
             <h4>Status: Error:?  {error ? <h5>Sorry hat nicht geklappt</h5> : <h5>Alles gut</h5>}
                 {/* error && <h4></h4> */}

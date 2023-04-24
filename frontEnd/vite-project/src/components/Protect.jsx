@@ -18,22 +18,19 @@ export const Protect = () => {
                 })
                 if (result.ok) {
                     setIstErlaubt(true)
-                    console.log(result)
-                    return <Outlet></Outlet> 
+                   // console.log(result)
+                    return <Outlet></Outlet>  // ! hier leite er dann zu den geschützten Protected Routen 
 
                 } else {
                     setIstErlaubt(false)
-                    console.log(result)                    // Seite wo soll er noch so hin wenn nix ist
+                   // console.log(result)                    // Seite wo soll er noch so hin wenn nix ist
                 }
             } catch (err) {
                 console.log(err)
             }
 
         }
-        Promise.all(verifyToken(), []).then((result) => {
-            console.log(result)
-        })
-
+        verifyToken()
 
     }, [])
 
