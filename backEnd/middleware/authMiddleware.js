@@ -1,7 +1,7 @@
 import { createHmac } from 'crypto'
 
-import { validationResult } from 'express-validator'
-import validator  from 'validator'
+import { validationResult } from 'express-validator'  // für Validierung damit er isEmpty Fehler meldet
+import validator from 'validator'       // für isStrongPassword Validierung
 
 import { verifyToken } from '../util/token.js'
 
@@ -22,7 +22,15 @@ export const encryptPassword = (req, res, next) => {
   if (result.isEmpty()) {
 
     // entspricht das Passwort den isStrongPassword Kriterien
+    // min 8 Zeichen min 1 groß min 1 klein min 1 Sonderzeichen
     if (validator.isStrongPassword(req.body.password)) {
+
+      // jetzt noch das Password auf zusätzliche eigene Kriterien prüfen mit //! check
+      const checkPasswordAufEigeneKriterien = validator
+        .matches(req.body.password, /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{10,})/)
+      // ! min 10 Zeichen, groß, klein, Sonderzeichen, Buchstaben und Zahlen
+        
+      if (checkPasswordAufEigeneKriterien) {
 
       // das Passwort wird zu einem Hash verschlüsselt  -> Rückumwandlung nicht mehr möglich
       const hmac = createHmac('sha512',
@@ -38,8 +46,14 @@ export const encryptPassword = (req, res, next) => {
       // ! wir speichern das verschlüsselte psw zurück ins psw und überschreiben es somit von davor
       // ! psw wird also sofort verschlüsselt selbst im BackEnd wird es also nie im Klartext gespeichert
 
+
+      } else {
+        return res.status(403).json({ message: `eigene Passwort prüfung ist nicht sicher genug(min 10 Zeichen, groß, klein, Sonderzeichen, Buchstaben und Zahlen) ${result.array()}` })
+      }
+
+
     } else {
-      return res.status(401).json({ message: `Passwort ist nicht sicher genug ${result.array()}` })
+      return res.status(401).json({ message: `Passwort ist nicht sicher genug(min 8 Zeichen, groß, klein, Sonderzeichen, Buchstaben und Zahlen) ${result.array()}` })
     }
 
   } else {
@@ -80,3 +94,7 @@ export const deleteCookie = (req, res, next) => {
 
   next()
 }
+
+
+
+
