@@ -2,6 +2,7 @@ import { Outlet } from "react-router-dom"
 
 // rfac
 import { useEffect, useState } from 'react'
+import Login from "../page/Login"
 
 export const Protect = () => {
     // useEffect um verifyToken herum bauen
@@ -19,7 +20,7 @@ export const Protect = () => {
                 if (result.ok) {
                     setIstErlaubt(true)
                    // console.log(result)
-                    return <Outlet></Outlet>  // ! hier leite er dann zu den geschützten Protected Routen 
+                 //   return <Outlet></Outlet>  // ! hier leite er dann zu den geschützten Protected Routen 
 
                 } else {
                     setIstErlaubt(false)
@@ -34,14 +35,24 @@ export const Protect = () => {
 
     }, [])
 
+switch(istErlaubt){
+    case true:
+        return <Outlet></Outlet>
+    case false:
+        return <Login></Login>
+    default:
+        return <h1> *** L o a d i n g *** </h1>
+}
 
-    return (
+   /*  return  (
         <>
-        { istErlaubt ? <Outlet></Outlet> : <h1> Bitte einlogen </h1>} 
-{/*         // ! <Outlet> </Outlet> damit wird in die Erlaubten Routen die Protected sind weitergeleitet
- */}      
+
+
+         { istErlaubt_ ? <Outlet></Outlet> : <h1> Bitte einlogen </h1>} 
+        { istErlaubt ? <Outlet></Outlet> : <Login></Login> }  
+    
         </>
     )
-
+ */
 
 }
