@@ -47,11 +47,33 @@ const app = express()   // server erstellen
 
 app.use(morgan('dev'))   // für Logging
 
-const CORS_WHITELIST = process.env.CORS_WHITELIST //?
+const CORS_WHITELIST = process.env.CORS_WHITELIST           // ist ein Array in .env
 app.use(cors( {
-    origin:  CORS_WHITELIST,
+    origin:   (origin, clb) => {
+         //   !==    =>     wenn nicht -1     =>    dann ist es in der  CORS_WHITELIST und hat Zugriff
+        if (CORS_WHITELIST.indexOf(origin) !== -1) {    
+            clb(null, true)
+        }
+        else {
+            clb(new Error('Nicht erlaubt durch CORS, nicht auf Whitelist'))
+        }
+    },
+    
+    // methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],   // https://www.npmjs.com/package/cors
+    // allowedHeaders: ['Content-Type', 'Authorization', ]
     credentials: true           // ! Secure HTTPS Cookies    wichtig damit HTTPS Cookies durchgelassen werden
 }))
+
+// CORS Fehlermeldungen abfangen    // fängt eigentlich alle Fehler ab ??
+app.use((err, req, res, next) => {
+    console.log(err.stack)
+    if (err){
+        res.status(599).json({message: `CORS Fehler gefangen: ${err.message}`})
+    }
+    else {
+        next()
+    }
+})
 
 app.use(cookieParser())          // ! auslesen von Cookies
 
