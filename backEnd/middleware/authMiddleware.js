@@ -29,22 +29,22 @@ export const encryptPassword = (req, res, next) => {
       const checkPasswordAufEigeneKriterien = validator
         .matches(req.body.password, /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{10,})/)
       // ! min 10 Zeichen, groß, klein, Sonderzeichen, Buchstaben und Zahlen
-        
+
       if (checkPasswordAufEigeneKriterien) {
 
-      // das Passwort wird zu einem Hash verschlüsselt  -> Rückumwandlung nicht mehr möglich
-      const hmac = createHmac('sha512',
-        req.body.password)     //  das Passwort aus dem FrontEnd //! soll verschlüsselt
+        // das Passwort wird zu einem Hash verschlüsselt  -> Rückumwandlung nicht mehr möglich
+        const hmac = createHmac('sha512',
+          req.body.password)     //  das Passwort aus dem FrontEnd //! soll verschlüsselt
 
 
-      // ! das Passwort wird noch zusätzlich mit dem JWT_SECRET verschlüsselt
-      // ! vorteil, wenn das psw nur a wäre, könnte es durch brute force herausgefunden werden 
-      // bzw. durch ein Wörterbuch oder durch Rainbow Tables
-      hmac.update(process.env.JWT_SECRET)
+        // ! das Passwort wird noch zusätzlich mit dem JWT_SECRET verschlüsselt
+        // ! vorteil, wenn das psw nur a wäre, könnte es durch brute force herausgefunden werden 
+        // bzw. durch ein Wörterbuch oder durch Rainbow Tables
+        hmac.update(process.env.JWT_SECRET)
 
-      req.body.password = hmac.digest('hex')     // ! hier wird psw verschlüsselt // das Passwort wird in Hexadezimal umgewandelt
-      // ! wir speichern das verschlüsselte psw zurück ins psw und überschreiben es somit von davor
-      // ! psw wird also sofort verschlüsselt selbst im BackEnd wird es also nie im Klartext gespeichert
+        req.body.password = hmac.digest('hex')     // ! hier wird psw verschlüsselt // das Passwort wird in Hexadezimal umgewandelt
+        // ! wir speichern das verschlüsselte psw zurück ins psw und überschreiben es somit von davor
+        // ! psw wird also sofort verschlüsselt selbst im BackEnd wird es also nie im Klartext gespeichert
 
 
       } else {

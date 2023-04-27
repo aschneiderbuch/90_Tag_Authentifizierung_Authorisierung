@@ -22,11 +22,14 @@ const cookieConfig = {
 // ! Problem es findet noch kein Abgleich mit der Datenbank statt ob es den User schon gibt :-(
 export const register = async (req, res) => {
     console.log(req.body)
+    // ! try und catch fehlt noch ???
+
     const db = await getDb()
     const result = await db.collection('user').insertOne(req.body)  // ! das Passwort ist bereits verschlüsselt und wird verschlüsselt in die MongoDb geschrieben
     console.log(result)
     res.status(201).json(result)   
 }
+// ! try und catch fehlt noch ???
 
 
 export const login = async (req, res) => {
@@ -58,4 +61,6 @@ export const login = async (req, res) => {
 
 
 
- 
+export const mailCheck = async (req, res) => {
+    
+}

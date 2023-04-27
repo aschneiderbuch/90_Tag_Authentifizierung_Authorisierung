@@ -4,7 +4,7 @@ import cors from 'cors'          // für Sicherheit URL beschränken    // ! Sec
 import morgan from 'morgan'     // für Logging
 import cookieParser from 'cookie-parser'     // auslesen von Cookies
 
-import { login, register } from './controller/authController.js'    // für Login und Register
+import { login, register, mailCheck } from './controller/authController.js'    // für Login und Register
 import { encryptPassword, verifyJWTToken, deleteCookie  } from './middleware/authMiddleware.js'   // für Passwort verschlüsseln // ! das Passwort aus dem FrontEnd wird verschlüsselt
 
 
@@ -51,7 +51,9 @@ const CORS_WHITELIST = process.env.CORS_WHITELIST           // ist ein Array in 
 app.use(cors( {
     origin:   (origin, clb) => {
          //   !==    =>     wenn nicht -1     =>    dann ist es in der  CORS_WHITELIST und hat Zugriff
-        if (CORS_WHITELIST.indexOf(origin) !== -1) {    
+        //  console.log(origin)    // anfragende Homepage
+        //  console.log(CORS_WHITELIST)  // whitelist
+        if (CORS_WHITELIST.indexOf(origin) !== -1 ) {    
             clb(null, true)
         }
         else {
@@ -66,7 +68,7 @@ app.use(cors( {
 
 // CORS Fehlermeldungen abfangen    // fängt eigentlich alle Fehler ab ??
 app.use((err, req, res, next) => {
-    console.log(err.stack)
+    console.log(err.message)
     if (err){
         res.status(599).json({message: `CORS Fehler gefangen: ${err.message}`})
     }
@@ -115,6 +117,9 @@ app.post('/login', encryptPassword,  login)  // ! das verschlüsselte Passwort w
 // und dann login in controller/authController.js weitergeleitet
 //  dort in authCon.. wird das Passwort in der // ! MongoDB geprüft
 
+// ! bekommen nach Login einen psw per Email geschickt und einen EmailToken im FrontEnd in den LokalStorage gespeichert
+// ! der EmailToken und das psw wird nirgends gespeichert
+app.post('/mailcheck', mailCheck) 
 
 // Zum verifizieren des Tokens
 app.get('/userValidate', verifyJWTToken, (req, res) => {
