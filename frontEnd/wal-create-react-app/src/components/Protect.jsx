@@ -2,7 +2,7 @@ import { Outlet } from "react-router-dom"
 
 // rfac
 import { useEffect, useState } from 'react'
-import Login from "../page/Login"
+import { Login } from '../page/Login.jsx'
 
 export const Protect = () => {
     // useEffect um verifyToken herum bauen

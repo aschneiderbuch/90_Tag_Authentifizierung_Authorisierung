@@ -2,8 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 
+import React from 'react'
 
-function Login() {
+export const Login = () => {
+
     const [error, setError] = useState(false)
     const navigate = useNavigate()
 
@@ -14,7 +16,7 @@ function Login() {
     const userLoginRef = useRef()
     const passwordLoginRef = useRef()
 
-    const login = async () => {
+    const login2 = async () => {
 
         const userLogin = userLoginRef.current.value
         // if (userLogin === '') { setError(true); return }   // ! wichtig wenn keine Eingabe kommt man nicht durch Login Feld durch
@@ -53,81 +55,23 @@ function Login() {
     }
 
 
-
-
-    const userRef = useRef()   // useRef anstatt useState, 
-    // damit nicht bei jedem tippen ein neu rendern stattfindet
-    const passwordRef = useRef()
-    const envURL = 'http://localhost:9999'
-    const envPath = '/register'
-    const url = envURL + envPath
-
-    const register = async () => {
-        // holt sich den Wert vom inputFeld user und password
-        const user = userRef.current.value      // holen des inputs 
-        const password = passwordRef.current.value
-
-        try {
-            // const getResult = async () => {
-            const result = await fetch(url, {
-                method: 'POST',
-                credentials: 'include',        // wichtig damit Secure Cookies abgefragt und mitgeschickt werden
-                headers: {
-                    'content-type': 'application/json'    // damit express.json() Parsen kann
-                },
-                body: JSON.stringify({ user, password })  //?   // input Felder in ein Objekt und mitschicken
-            })
-            const data = await result.json()
-            console.log(data)
-            userRef.current.value = ''    // leert das input Feld nach dem Register drücken
-            // so wie wenn man mit useState arbeitet 
-            passwordRef.current.value = ''
-
-            if (result.ok) {
-                console.log('register erfolgreich')
-            } else {
-                setError(true)     // gibt Error Text wenn nicht geklappt
-            }
-            //  }
-            //   getResult()
-
-        } catch (error) {
-            console.log(error)
-        }
-
-
-
-
-
-    }
-
     return (
-        <>
 
-            <>
-                <button onClick={login} >login</button>
-                <label htmlFor="userLogin">userLogin</label>
-                <input ref={userLoginRef} type="text" name="userLogin" id="userLogin" placeholder='userLogin' required />
-                <label htmlFor="passwordLogin">passwordLogin</label>
-                <input ref={passwordLoginRef} type="password" name='passwordLogin' id='passwordLogin' placeholder="passwordLogin" required />
-                <button onClick={check}>check</button>
-            </>
+        <section className='login'>
 
-            <>
-                <button onClick={register}>register</button>
-                <label htmlFor='user'>Register</label>
-                <input ref={userRef} type="text" placeholder='user' name='user' required></input>
-                <label htmlFor='password'>Password</label>
-                <input ref={passwordRef} type="password" placeholder='password' name='password' required></input>
-            </>
+            <button onClick={login2} >login</button>
+            <label htmlFor="userLogin">userLogin</label>
+            <input ref={userLoginRef} type="text" name="userLogin" id="userLogin" placeholder='userLogin' required />
+            <label htmlFor="passwordLogin">passwordLogin</label>
+            <input ref={passwordLoginRef} type="password" name='passwordLogin' id='passwordLogin' placeholder="passwordLogin" required />
+            <button onClick={check}>check</button>
 
-            <h4>Status: Error:?  {error ? <h5>Sorry hat nicht geklappt</h5> : <h5>Alles gut</h5>}
+
+
+            <h4>Status: Error:?  {error ? <p>Sorry hat nicht geklappt</p> : <p>Alles gut</p>}
                 {/* error && <h4></h4> */}
             </h4>
 
-
-        </>
+        </section>
     )
 }
-
-export default Login

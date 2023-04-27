@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import './App.css'
-import Login from './page/Login.jsx'
 import { Protect } from './components/Protect.jsx'
 import { Dashboard } from './page/Dashboard.jsx'
+import { Home } from './page/Home.jsx'
 
 
 function App() {
@@ -14,8 +14,8 @@ function App() {
 
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={<Login></Login>} > </Route>
-          <Route path='/logout' element={<Login></Login>} > </Route>
+          <Route path='/' element={ <Home></Home>} > </Route >
+          <Route path='/logout' element={<Home></Home>} > </Route>
           <Route element={<Protect></Protect>}  >
             <Route path='/dashboard' element={<Dashboard></Dashboard>} >  </Route>
             {/* die Routen unterhalb 
