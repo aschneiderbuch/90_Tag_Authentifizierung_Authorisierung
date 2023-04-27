@@ -67,6 +67,7 @@ app.use(cors( {
 }))
 
 // CORS Fehlermeldungen abfangen    // fängt eigentlich alle Fehler ab ??
+export function CORS () { console.log('mach Verknüpfung zu fehlermeldungStatusListe.js')}
 app.use((err, req, res, next) => {
     console.log(err.message)
     if (err){
@@ -120,6 +121,7 @@ app.post('/login', encryptPassword,  login)  // ! das verschlüsselte Passwort w
 // ! bekommen nach Login einen psw per Email geschickt und einen EmailToken im FrontEnd in den LokalStorage gespeichert
 // ! der EmailToken und das psw wird nirgends gespeichert
 app.post('/mailcheck', mailCheck) 
+
 
 // Zum verifizieren des Tokens
 app.get('/userValidate', verifyJWTToken, (req, res) => {

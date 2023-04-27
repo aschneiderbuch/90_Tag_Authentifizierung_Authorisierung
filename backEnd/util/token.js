@@ -49,7 +49,7 @@ export const createMailToken = (claim) => {
 }
 
 // ! verifyMailToken     -> später dann noch eine extra Route zum prüfen des Tokens
-export const verifyMailToke = (token, secret) => {
+export const verifyMailToken = (token, secret) => {
   const result = jwt.verify(token, secret + process.env.JWT_MAIL_SECRET)
   return result
 }
