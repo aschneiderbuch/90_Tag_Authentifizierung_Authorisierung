@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 import './App.css'
-import Login from './page/Login'
+import Login from './page/Login.jsx'
 import { Protect } from './components/Protect.jsx'
 import { Dashboard } from './page/Dashboard.jsx'
 
