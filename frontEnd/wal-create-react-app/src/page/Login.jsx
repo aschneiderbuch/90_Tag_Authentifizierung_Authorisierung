@@ -37,8 +37,11 @@ export const Login = () => {
 
         if (result.ok) {
             console.log('login erfolgreich, mit User: ' + userLogin)
+            const data = await result.json()
+            console.log(data)
+            localStorage.setItem('mailtoken',  data.token )   // speichert den Token in den localStorage')
 
-            navigate('/dashboard')     // weil erfolgreich, wird man weitergeleitet
+            navigate('/email')     // weil erfolgreich, wird man weitergeleitet
         }
         else {
             setError(true)   // wenn nicht erfolgreich, wird der Error auf true gesetzt  und unten kommt eine h5 Ausgabe Text

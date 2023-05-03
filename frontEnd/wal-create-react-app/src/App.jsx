@@ -4,6 +4,7 @@ import './App.css'
 import { Protect } from './components/Protect.jsx'
 import { Dashboard } from './page/Dashboard.jsx'
 import { Home } from './page/Home.jsx'
+import { Email } from './page/Email.jsx'
 
 
 function App() {
@@ -14,8 +15,9 @@ function App() {
 
       <BrowserRouter>
         <Routes>
-          <Route path='/' element={ <Home></Home>} > </Route >
+          <Route path='/' element={<Home></Home>} > </Route >
           <Route path='/logout' element={<Home></Home>} > </Route>
+          <Route path='/email' element={<Email>  </Email>} >     </Route>
           <Route element={<Protect></Protect>}  >
             <Route path='/dashboard' element={<Dashboard></Dashboard>} >  </Route>
             {/* die Routen unterhalb 

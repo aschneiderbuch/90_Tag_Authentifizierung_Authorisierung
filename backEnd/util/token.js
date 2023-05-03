@@ -44,12 +44,16 @@ const createSecret = () => {
 // das input allgemeiner ist und man nicht auf den input schließen kann
 export const createMailToken = (claim) => {
   const secret = createSecret()
-  const token = jwt.sing(claim, secret + process.env.JWT_MAIL_SECRET, { expiresIn: '15m' })
+  const token = jwt.sign(claim, secret + process.env.JWT_MAIL_SECRET, { expiresIn: '15m' })
   return { secret, token }
 }
 
 // ! verifyMailToken     -> später dann noch eine extra Route zum prüfen des Tokens
 export const verifyMailToken = (token, secret) => {
+// console.log('-->token split'+token.split(':')[2].replace(/"/gi, ' ').replace(/}/gi, ' ' ).trim(''))
+// token = token.split(':')[2].replace(/"/gi, ' ').replace(/}/gi, ' ' ).trim('')
+  console.log('im verifyMailToken funk',token, secret)
+  
   const result = jwt.verify(token, secret + process.env.JWT_MAIL_SECRET)
   return result
 }

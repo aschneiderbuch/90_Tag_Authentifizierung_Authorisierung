@@ -22,6 +22,8 @@ export const sendMail = (address, content) => {
         <h3>${content.token}</h3>`  // ! .token raus nehmen, nur zum testen
         // denn wird nur in lokalStorage gespeichert
     }
+    console.log(content.secret)
+    console.log(content.token)
     
     transport.sendMail(message, (err, info) => {
         try {
